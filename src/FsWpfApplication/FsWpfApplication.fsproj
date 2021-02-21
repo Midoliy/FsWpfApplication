@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Page Remove="MainWindow.xaml" />
+    <Page Remove="App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="ViewModels\MainWindowViewModel.fs" />
+    <Compile Include="MainWindows.xaml.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Epoxy.Wpf" Version="0.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="App.xaml" />
+    <Resource Include="MainWindow.xaml" />
+  </ItemGroup>
+
+</Project>
