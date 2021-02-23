@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Page Remove="App.xaml" />
+    <Page Remove="MainWindow.xaml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Resource Include="MainWindow.xaml" />
+    <Resource Include="App.xaml" />
+    <Compile Include="MainWindows.xaml.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\FsWpfINotifyPropertyChanged.ViewModels\FsWpfINotifyPropertyChanged.ViewModels.fsproj" />
+  </ItemGroup>
+
+
+  <ItemGroup />
+
+</Project>
