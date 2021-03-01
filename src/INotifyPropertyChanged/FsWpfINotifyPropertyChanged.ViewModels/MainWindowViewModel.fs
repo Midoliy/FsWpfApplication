@@ -4,6 +4,8 @@ open System.ComponentModel
 open Microsoft.FSharp.Quotations
 open Microsoft.FSharp.Quotations.Patterns
 open Microsoft.FSharp.Quotations.DerivedPatterns
+open System.Runtime.CompilerServices
+open System.Runtime.InteropServices
 
 [<AbstractClass>]
 type ViewModelBase() =
@@ -12,15 +14,12 @@ type ViewModelBase() =
   interface INotifyPropertyChanged with
     [<CLIEvent>]
     member __.PropertyChanged = propertyChanged.Publish
+
+  member __.OnPropertyChanged([<CallerMemberName; Optional; DefaultParameterValue("")>] memberName: string) =
+    if not(System.String.IsNullOrEmpty(memberName)) then
+      propertyChanged.Trigger(__, PropertyChangedEventArgs(memberName))
     
-  // NotifyPropertyChanged発火用のsetメソッド
-  member __.SetValue<'T> (field: 'T byref, value: 'T,  name) =
-    if obj.Equals(field, value) then
-      false
-    else
-      field <- value
-      propertyChanged.Trigger(__, PropertyChangedEventArgs(name))
-      true
+  
 
 type MainWindowViewModel () = 
   inherit ViewModelBase()
@@ -29,8 +28,8 @@ type MainWindowViewModel () =
 
   member __.Title
     with get() = title
-    and set(v) = __.SetValue(&title, v, nameof(__.Title)) |> ignore
+    and set(title') = title <- title'; __.OnPropertyChanged()
         
   member __.Number
     with get() = number
-    and set(v) = __.SetValue(&number, v, nameof(__.Number)) |> ignore
+    and set(number') = number <- number'; __.OnPropertyChanged()
